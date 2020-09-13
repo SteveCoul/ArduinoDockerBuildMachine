@@ -3,7 +3,9 @@
 IMAGE_NAME=`basename $0 .sh | tr [A-Z] [a-z]`
 TARGET=`basename $PWD`
 
-cat << _EOF_ > Dockerfile
+mkdir -p build
+
+cat << _EOF_ > build/Dockerfile
 
 FROM ubuntu:18.04
 ENV DISPLAY=:0
@@ -49,7 +51,7 @@ echo "*														"
 echo "* Build / Prepare build machine as $IMAGE_NAME"
 echo "*														"
 echo "*******************************************************"
-docker build . -t $IMAGE_NAME
+docker build build -t $IMAGE_NAME
 
 echo "*******************************************************"
 echo "*														"
