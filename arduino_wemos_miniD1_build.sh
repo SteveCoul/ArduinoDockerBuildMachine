@@ -35,7 +35,8 @@ RUN echo "ln -s build $TARGET" >> /root/init
 RUN echo "cd $TARGET" >> /root/init
 
 RUN echo "echo Compiling...." >> /root/init
-RUN echo "arduino-cli compile --build-path \`pwd\` -b esp8266:esp8266:d1 ." >> /root/init
+RUN echo "arduino-cli compile --build-path \`pwd\` -b esp8266:esp8266:d1 --build-properties compiler.cpp.extra_flags=-I." >> /root/init
+
 RUN echo "cp \\\`find build -name $TARGET*.bin\\\` ." >> /root/init
 # RUN echo "/bin/sh" >> /root/init
 
@@ -43,8 +44,17 @@ RUN chmod +x /root/init
 CMD /root/init
 _EOF_
 
-echo "build/prepare $IMAGE_NAME"
-docker build -q . -t $IMAGE_NAME
-echo "running build machine"
+echo "*******************************************************"
+echo "*														"
+echo "* Build / Prepare build machine as $IMAGE_NAME"
+echo "*														"
+echo "*******************************************************"
+docker build . -t $IMAGE_NAME
+
+echo "*******************************************************"
+echo "*														"
+echo "* Running build machine"
+echo "*														"
+echo "*******************************************************"
 docker run -e -it -v $PWD:/root/build $IMAGE_NAME
 
