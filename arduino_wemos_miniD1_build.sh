@@ -41,6 +41,7 @@ RUN echo "arduino-cli compile --build-path \`pwd\` -b esp8266:esp8266:d1 --build
 
 RUN echo "cp \\\`find build -name $TARGET*.bin\\\` ." >> /root/init
 RUN echo "cp \\\`find ~/.arduino15 -name esptool.py\\\` build" >> /root/init
+RUN echo "cp \\\`find ~/.arduino15 -name espota.py\\\` build" >> /root/init
 # RUN echo "/bin/sh" >> /root/init
 
 RUN chmod +x /root/init
